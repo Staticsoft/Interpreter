@@ -1,17 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
-        <LangVersion>latest</LangVersion>
-        <Nullable>enable</Nullable>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <RootNamespace>Staticsoft.$(MSBuildProjectName)</RootNamespace>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Staticsoft.Testing.Unit" Version="1.0.0-10" />
-        <PackageReference Include="Staticsoft.Extensions.DependencyInjection" Version="1.0.0-3" />
+		<PackageReference Include="Staticsoft.Contracts.ASP.Client" Version="1.0.0-18" />
+		<PackageReference Include="Staticsoft.Testing.Integration" Version="1.0.0-10" />
+		<PackageReference Include="Staticsoft.HttpCommunication.Json" Version="1.0.0-8" />
+		<PackageReference Include="Staticsoft.PartitionedStorage.Memory" Version="1.0.0-10" />
+		<PackageReference Include="Staticsoft.WsCommunication.Client.Testing" Version="1.0.0-8" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
         <PackageReference Include="xunit" Version="2.4.1" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
@@ -25,8 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Interpreter.Abstractions\Interpreter.Abstractions.csproj" />
-        <ProjectReference Include="..\Interpreter.Memory\Interpreter.Memory.csproj" />
+      <ProjectReference Include="..\TestServer\TestServer.csproj" />
     </ItemGroup>
 
 </Project>

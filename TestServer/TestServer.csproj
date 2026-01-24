@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <ItemGroup>
+        <ProjectReference Include="..\Interpreter.Server\Interpreter.Server.csproj" />
+    </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Staticsoft.PartitionedStorage.Memory" Version="1.0.0-10" />
+		<PackageReference Include="Staticsoft.Messages.Memory" Version="1.0.0-4" />
+		<PackageReference Include="Staticsoft.WsCommunication.Server.Local" Version="1.0.0-8" />
+		<PackageReference Include="Staticsoft.Flow.Local" Version="1.0.0-8" />
+	</ItemGroup>
+
+</Project>
