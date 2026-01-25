@@ -11,7 +11,6 @@ static class ToolsServices
 
 			.AddScoped<PrintTools>()
 			.AddScoped<TableTools>()
-			.AddScoped<DateTimeTools>()
 
 			.AddSingleton<ProgramAssemblies, RequiredAssemblies>();
 }
