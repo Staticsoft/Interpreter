@@ -2,9 +2,9 @@
 
 static class NewId
 {
-    public static string FromTimestamp()
-        => $"{Timestamp:D15}";
+	public static string FromTimestamp()
+		=> $"{Timestamp:D15}";
 
-    static long Timestamp
-        => ((DateTimeOffset)DateTime.UtcNow).ToUnixTimeMilliseconds();
+	static long Timestamp
+		=> ((DateTimeOffset)DateTime.UtcNow).ToUnixTimeMilliseconds();
 }

@@ -19,7 +19,7 @@ public class ProgramRunner<ProgramToolset>(
 
 	public async Task Run(string code, string userId, string conversationId)
 	{
-		var syntaxTree = CSharpSyntaxTree.ParseText(code);
+		var syntaxTree = CSharpSyntaxTree.ParseText(ComposeProgram(code));
 
 		var compilation = CSharpCompilation.Create("RuntimeAssembly")
 			.WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
@@ -50,4 +50,24 @@ public class ProgramRunner<ProgramToolset>(
 			}
 		}
 	}
+
+	static string ComposeProgram(string snippet)
+		=> $$"""
+			using System;
+			using System.Collections.Generic;
+			using System.Linq;
+			using System.Text.Json;
+			using System.Threading.Tasks;
+			using {{typeof(ProgramToolset).Namespace}};
+
+			namespace RuntimeCompilation;
+
+			public class Program
+			{
+				public async Task Run({{typeof(ProgramToolset).Name}} tools)
+				{
+					{{snippet}}
+				}
+			}
+			""";
 }

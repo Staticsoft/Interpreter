@@ -2,5 +2,5 @@
 
 public record Conversation
 {
-    public string[] MessageIds { get; set; } = [];
+	public string[] MessageIds { get; set; } = [];
 }
