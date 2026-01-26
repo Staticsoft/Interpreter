@@ -3,36 +3,36 @@
 namespace Staticsoft.Interpreter.Server;
 
 public class ConversationHistory(
-    PartitionConversations conversations
+	PartitionConversations conversations
 )
 {
-    readonly PartitionConversations Conversations = conversations;
+	readonly PartitionConversations Conversations = conversations;
 
-    public async Task<string> Create(string userId)
-    {
-        var conversationId = NewId.FromTimestamp();
+	public async Task<string> Create(string userId)
+	{
+		var conversationId = NewId.FromTimestamp();
 
-        await Conversations
-            .Get(userId)
-            .Save(conversationId, new() { MessageIds = [] });
+		await Conversations
+			.Get(userId)
+			.Save(conversationId, new() { MessageIds = [] });
 
-        return conversationId;
-    }
+		return conversationId;
+	}
 
-    public async Task AddMessage(string userId, string conversationId, string messageId)
-    {
-        var conversation = await Conversations
-            .Get(userId)
-            .Get(conversationId);
+	public async Task AddMessage(string userId, string conversationId, string messageId)
+	{
+		var conversation = await Conversations
+			.Get(userId)
+			.Get(conversationId);
 
 
-        var updatedConversation = conversation.Data with
-        {
-            MessageIds = [.. conversation.Data.MessageIds, messageId]
-        };
+		var updatedConversation = conversation.Data with
+		{
+			MessageIds = [.. conversation.Data.MessageIds, messageId]
+		};
 
-        await Conversations
-            .Get(userId)
-            .Save(conversationId, updatedConversation, conversation.Version);
-    }
+		await Conversations
+			.Get(userId)
+			.Save(conversationId, updatedConversation, conversation.Version);
+	}
 }

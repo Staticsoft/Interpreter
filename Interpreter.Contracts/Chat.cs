@@ -24,13 +24,18 @@ public class Chat(
 
 	}
 
-	public class TableMessage
+	public interface Message
+	{
+		string Id { get; }
+	}
+
+	public class TableMessage : Message
 	{
 		public required string Id { get; init; }
 		public required string TableId { get; init; }
 	}
 
-	public class TextMessage
+	public class TextMessage : Message
 	{
 		public required string Id { get; init; }
 		public required string Text { get; init; }

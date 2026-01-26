@@ -11,6 +11,7 @@ using Staticsoft.TestServer;
 using Staticsoft.WsCommunication.Client.Abstractions;
 using Staticsoft.WsCommunication.Client.Testing;
 using Staticsoft.WsCommunication.Server.Abstractions;
+using System.Threading.Channels;
 
 namespace Staticsoft.Interpreter.Server.Tests;
 
@@ -42,7 +43,12 @@ public class TestBase : IntegrationTestBase<TestStartup>
 	protected WsClient Client
 		=> Client<WsClient>();
 
-	protected async Task<IReadOnlyCollection<string>> Run(string userMessage)
+	protected Task<Chat.Message[]> RunUntil<T>(string userMessage)
+		where T : class, Chat.Message
+		=> RunUntil<T>(userMessage, _ => true);
+
+	protected async Task<Chat.Message[]> RunUntil<T>(string userMessage, Func<T, bool> predicate)
+		where T : class, Chat.Message
 	{
 		await using var connection = await Client.Connect();
 
@@ -55,34 +61,48 @@ public class TestBase : IntegrationTestBase<TestStartup>
 			}
 		});
 
-		var textMessagesChannel = connection.Receive<Chat.TextMessage>();
-		var tableMessagesChannel = connection.Receive<Chat.TableMessage>();
+		using var cancellation = new CancellationTokenSource();
+		var aggregate = Channel.CreateUnbounded<Chat.Message>();
 
-		var textMessages = new List<string>();
+		StreamToAggregate(connection.Receive<Chat.TextMessage>(), aggregate.Writer, cancellation.Token);
+		StreamToAggregate(connection.Receive<Chat.TableMessage>(), aggregate.Writer, cancellation.Token);
 
-		var waitText = textMessagesChannel.ReadAsync().AsTask();
-		var waitTable = tableMessagesChannel.ReadAsync().AsTask();
+		var messages = new List<Chat.Message>();
 
-		var text = string.Empty;
-
-		while (text != "Task completed")
+		await foreach (var message in aggregate.Reader.ReadAllAsync())
 		{
-			var task = await Task.WhenAny([waitText, waitTable]);
+			messages.Add(message);
 
-			if (task == waitText)
+			if (message is T typedMessage && predicate(typedMessage))
 			{
-				text = (await waitText).Text;
-				waitText = textMessagesChannel.ReadAsync().AsTask();
+				cancellation.Cancel();
+				break;
 			}
-			else
-			{
-				text = (await waitTable).TableId;
-				waitTable = tableMessagesChannel.ReadAsync().AsTask();
-			}
-
-			textMessages.Add(text);
 		}
 
-		return textMessages;
+		return messages.ToArray();
+	}
+
+	static void StreamToAggregate<TMessage>(
+		ChannelReader<TMessage> source,
+		ChannelWriter<Chat.Message> destination,
+		CancellationToken cancellationToken
+	)
+		where TMessage : Chat.Message
+	{
+		_ = Task.Run(async () =>
+		{
+			try
+			{
+				await foreach (var message in source.ReadAllAsync(cancellationToken))
+				{
+					await destination.WriteAsync(message, cancellationToken);
+				}
+			}
+			catch (OperationCanceledException)
+			{
+
+			}
+		}, cancellationToken);
 	}
 }

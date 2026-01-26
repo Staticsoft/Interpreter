@@ -2,5 +2,5 @@
 
 public interface ProgramWriter
 {
-    Task<string> Write(string requirements);
+	Task<string> Write(string requirements);
 }

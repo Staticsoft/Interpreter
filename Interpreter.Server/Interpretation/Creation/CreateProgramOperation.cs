@@ -21,26 +21,6 @@ public class CreateProgramOperation(
 	{
 		var code = await Program.Write(input.Requirements);
 
-		return new Output()
-		{
-			Code = $$"""
-            using System;
-            using System.Collections.Generic;
-            using System.Linq;
-            using System.Text.Json;
-            using System.Threading.Tasks;
-            using Staticsoft.Interpreter.Server;
-
-            namespace RuntimeCompilation;
-
-            public class Program
-            {
-                public async Task Run(TestToolset tools)
-                {
-                    {{code}}
-                }
-            }
-            """
-		};
+		return new Output() { Code = code };
 	}
 }
