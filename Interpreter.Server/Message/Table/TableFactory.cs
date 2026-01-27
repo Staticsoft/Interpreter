@@ -21,10 +21,10 @@ public class TableFactory(
 }
 
 public class TableFactory<Data, View>(
-	Converter<Data, View> converter
+	TableConverter<Data, View> converter
 ) : TableFactory<Data>
 {
-	readonly Converter<Data, View> Converter = converter;
+	readonly TableConverter<Data, View> Converter = converter;
 
 	public TableView Create(IEnumerable<Data> data)
 	{

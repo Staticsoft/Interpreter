@@ -1,5 +1,6 @@
 ﻿using FluentAssertions.Collections;
 using FluentAssertions.Execution;
+using System.Text.Json;
 
 namespace Staticsoft.Interpreter.Server.Tests;
 
@@ -28,8 +29,15 @@ public static class CollectionExtensions
 
 		for (int i = 0; i < expectedItems.Length; i++)
 		{
-			actualList[i].Should().BeEquivalentTo(
-				expectedItems[i],
+			var actual = actualList[i];
+			var expected = expectedItems[i];
+			if (actual is JsonElement element)
+			{
+				actual = (T)JsonSerializer.Deserialize(element, expected.GetType())!;
+			}
+
+			actual.Should().BeEquivalentTo(
+				expected,
 				options => options.WithStrictOrdering(),
 				$"item at index {i} does not match"
 			);
