@@ -25,7 +25,9 @@ public class TestStartup : InterpreterStartup
 			.AddSingleton<ProgramWriter, TestProgramWriter>()
 			.AddScoped<ProgramRunner, ProgramRunner<TestToolset>>()
 			.AddScoped<TestToolset>()
-			.Decorate<ProgramAssemblies, TestAssemblies>();
+			.Decorate<ProgramAssemblies, TestAssemblies>()
+			.AddSingleton<TableFactory<TestTable>, TableFactory<TestTable, TestView>>()
+			.AddSingleton<TableConverter<TestTable, TestView>, TestTableConverter>();
 
 	static string BackendBaseAddress()
 		=> $"http://localhost:{Environment.GetEnvironmentVariable("ASPNETCORE_PORT")}";

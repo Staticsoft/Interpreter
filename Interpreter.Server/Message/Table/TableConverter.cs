@@ -1,6 +1,6 @@
 ﻿namespace Staticsoft.Interpreter.Server;
 
-public interface Converter<Data, View>
+public interface TableConverter<Data, View>
 {
 	View Convert(Data data);
 }

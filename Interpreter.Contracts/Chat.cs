@@ -44,13 +44,6 @@ public class Chat(
 
 	public class HistoryResponse
 	{
-		public class Message
-		{
-			public required string Id { get; init; }
-			public required string Text { get; init; }
-			public required string Type { get; init; }
-		}
-
-		public required Message[] Messages { get; init; }
+		public required object[] Messages { get; init; }
 	}
 }

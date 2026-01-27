@@ -18,7 +18,7 @@ public class HistoryEndpoint(
 		return new()
 		{
 			Messages = messages
-				.Select(message => new HistoryResponse.Message
+				.Select(message => new TextMessage
 				{
 					Id = message.Id,
 					Text = message.Data.Text,
