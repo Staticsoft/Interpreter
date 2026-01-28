@@ -15,15 +15,6 @@ public class HistoryEndpoint(
 	{
 		var messages = await History.GetMessages(Identity.UserId);
 
-		return new()
-		{
-			Messages = messages
-				.Select(message => new TextMessage
-				{
-					Id = message.Id,
-					Text = message.Data.Text,
-					Type = $"{message.Data.Origin}"
-				}).ToArray()
-		};
+		return new() { Messages = messages };
 	}
 }

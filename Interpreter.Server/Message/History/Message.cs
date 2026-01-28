@@ -2,13 +2,6 @@
 
 public class Message
 {
-	public string Text { get; set; } = string.Empty;
-	public Type Origin { get; set; } = Type.Unknown;
-
-	public enum Type
-	{
-		Unknown,
-		User,
-		System
-	}
+	public string Data { get; set; } = string.Empty;
+	public string Type { get; set; } = string.Empty;
 }

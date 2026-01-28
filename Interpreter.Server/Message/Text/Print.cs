@@ -13,56 +13,52 @@ public class Print(
 	readonly PartitionConnectionsByUsers Connections = connections;
 	readonly MessageHistory History = history;
 
-	public async Task<string> SystemTextMessage(string text, string userId)
+	public Task<string> UserTextMessage(string userId, string connectionId, string text)
+		=> PrintTextMessage(userId, connectionId, text, "User");
+
+	public async Task<string> SystemTextMessage(string userId, string text)
 	{
 		var connection = await Connections.Get(userId);
 
-		return await PrintTextMessage(text, userId, connection.Data.Id, Message.Type.System);
+		return await PrintTextMessage(userId, connection.Data.Id, text, "System");
 	}
 
-	public async Task<string> SystemTableMessage(string tableId, string userId)
+	public async Task<string> SystemTableMessage(string userId, string tableId)
 	{
 		var connection = await Connections.Get(userId);
 
-		return await PrintTableMessage(tableId, userId, connection.Data.Id, Message.Type.System);
+		return await PrintTableMessage(userId, connection.Data.Id, tableId);
 	}
 
-	public Task<string> UserMessage(string text, string userId, string connectionId)
-		=> PrintTextMessage(text, userId, connectionId, Message.Type.User);
-
-	Task<string> PrintTextMessage(string text, string userId, string connectionId, Message.Type type)
+	Task<string> PrintTextMessage(string userId, string connectionId, string text, string type)
 		=> PrintMessage(
+			userId,
+			connectionId,
 			id => new Chat.TextMessage
 			{
 				Id = id,
 				Text = text,
-				Type = $"{type}"
-			},
-			text,
+				Type = type
+			});
+
+	Task<string> PrintTableMessage(string userId, string connectionId, string tableId)
+		=> PrintMessage(
 			userId,
 			connectionId,
-			type
-		);
-
-	Task<string> PrintTableMessage(string tableId, string userId, string connectionId, Message.Type type)
-		=> PrintMessage(
 			id => new Chat.TableMessage()
 			{
 				Id = id,
 				TableId = tableId
-			},
-			tableId,
-			userId,
-			connectionId,
-			type
-		);
+			});
 
-	async Task<string> PrintMessage<T>(Func<string, T> data, string text, string userId, string connectionId, Message.Type type)
+	async Task<string> PrintMessage<T>(string userId, string connectionId, Func<string, T> getData)
+		where T : Chat.Message
 	{
 		var messageId = NewId.FromTimestamp();
+		var data = getData(messageId);
 
-		await History.SaveMessage(messageId, text, userId, type);
-		await Server.Send(connectionId, data(messageId));
+		await History.SaveMessage(userId, messageId, data);
+		await Server.Send(connectionId, getData(messageId));
 
 		return messageId;
 	}
