@@ -21,7 +21,7 @@ public class SendMessageEndpoint(
 		var user = await Users.Get(request.ConnectionId);
 		var (text, userId) = (request.Body.Text, user.Data.Id);
 
-		var messageId = await Print.UserMessage(text, userId, request.ConnectionId);
+		var messageId = await Print.UserTextMessage(userId, request.ConnectionId, text);
 
 		await ProcessMessage.Create(new()
 		{

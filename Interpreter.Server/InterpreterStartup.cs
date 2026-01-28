@@ -32,7 +32,8 @@ public abstract class InterpreterStartup
 			.AddSingleton<MessageHistory>()
 			.AddSingleton<ConversationHistory>()
 
-			.AddSingleton<TableFactory>();
+			.AddSingleton<TableFactory>()
+			.AddSingleton<MessageSerializer>();
 
 	void Endpoints(IEndpointRouteBuilder endpoints)
 		=> ConfigureEndpoints(endpoints);

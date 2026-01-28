@@ -21,7 +21,7 @@ public class PrintOperation(
 
 	public async Task<Output> Execute(Input input)
 	{
-		var messageId = await Print.SystemTextMessage(input.Text, input.UserId);
+		var messageId = await Print.SystemTextMessage(input.UserId, input.Text);
 
 		await Conversations.AddMessage(input.UserId, input.ConversationId, messageId);
 

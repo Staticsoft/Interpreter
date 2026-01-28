@@ -34,7 +34,7 @@ public class ShowTableOperation(
 				Columns = input.Table.Columns
 			});
 
-		var messageId = await Print.SystemTableMessage(tableId, input.UserId);
+		var messageId = await Print.SystemTableMessage(input.UserId, tableId);
 		await Conversations.AddMessage(input.UserId, input.ConversationId, messageId);
 
 		return new();

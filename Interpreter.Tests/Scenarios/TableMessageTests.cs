@@ -13,17 +13,18 @@ public class TableMessageTests : TestBase
 			message => message.Text == "Task completed"
 		);
 
-		var tableMessage = messages
+		var tableId = messages
+			.OfType<Chat.TableMessage>()
 			.Should()
-			.ContainSingle(message => message.As<Chat.TableMessage>() != null)
+			.ContainSingle()
 			.Which
-			.As<Chat.TableMessage>();
-
-		tableMessage.TableId
+			.TableId
 			.Should()
-			.NotBeNullOrEmpty();
+			.NotBeNullOrEmpty()
+			.And
+			.Subject;
 
-		var table = await Api.Tables.Get.Execute(tableMessage.TableId);
+		var table = await Api.Tables.Get.Execute(tableId);
 		table.Columns
 			.Should()
 			.BeSimilarTo(
@@ -37,6 +38,29 @@ public class TableMessageTests : TestBase
 			.BeSimilarTo(
 				new { Id = 1, Name = "John Smith", Salary = 50_000, HireDate = "2020-01-02T03:04:05.0000000Z" },
 				new { Id = 2, Name = "Alice Brown", Salary = 100_000, HireDate = "2025-04-03T02:01:00.0000000Z" }
+			);
+	}
+
+	[Test]
+	public async Task ReturnsTableMessageHistory()
+	{
+		var messages = await RunUntil<Chat.TextMessage>(
+			"table",
+			message => message.Text == "Task completed"
+		);
+
+		var tableId = messages
+			.OfType<Chat.TableMessage>()
+			.Single()
+			.TableId;
+
+		var history = await Api.Chat.History.Execute(new());
+		history.Messages
+			.Should()
+			.BeSimilarTo(
+				new { Text = "table", Type = "User" },
+				new { TableId = tableId, Type = "System" },
+				new { Text = "Task completed", Type = "System" }
 			);
 	}
 }

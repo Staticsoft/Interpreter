@@ -27,19 +27,21 @@ public class Chat(
 	public interface Message
 	{
 		string Id { get; }
+		string Type { get; }
 	}
 
 	public class TableMessage : Message
 	{
 		public required string Id { get; init; }
+		public string Type { get; } = "System";
 		public required string TableId { get; init; }
 	}
 
 	public class TextMessage : Message
 	{
 		public required string Id { get; init; }
-		public required string Text { get; init; }
 		public required string Type { get; init; }
+		public required string Text { get; init; }
 	}
 
 	public class HistoryResponse
