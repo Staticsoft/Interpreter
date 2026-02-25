@@ -33,7 +33,7 @@ public class Chat(
 	public class TableMessage : Message
 	{
 		public required string id { get; init; }
-		public string type { get; } = "System";
+		public string type { get; } = "system";
 		public required string tableId { get; init; }
 	}
 

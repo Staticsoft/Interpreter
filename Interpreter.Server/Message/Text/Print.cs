@@ -14,13 +14,13 @@ public class Print(
 	readonly MessageHistory History = history;
 
 	public Task<string> UserTextMessage(string userId, string connectionId, string text)
-		=> PrintTextMessage(userId, connectionId, text, "User");
+		=> PrintTextMessage(userId, connectionId, text, "user");
 
 	public async Task<string> SystemTextMessage(string userId, string text)
 	{
 		var connection = await Connections.Get(userId);
 
-		return await PrintTextMessage(userId, connection.Data.Id, text, "System");
+		return await PrintTextMessage(userId, connection.Data.Id, text, "system");
 	}
 
 	public async Task<string> SystemTableMessage(string userId, string tableId)

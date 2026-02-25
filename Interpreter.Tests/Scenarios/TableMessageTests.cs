@@ -58,9 +58,9 @@ public class TableMessageTests : TestBase
 		history.messages
 			.Should()
 			.BeSimilarTo(
-				new { text = "table", type = "User" },
-				new { tableId = tableId, type = "System" },
-				new { text = "Task completed", type = "System" }
+				new { text = "table", type = "user" },
+				new { tableId = tableId, type = "system" },
+				new { text = "Task completed", type = "system" }
 			);
 	}
 }
