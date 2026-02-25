@@ -9,14 +9,14 @@ public class Chat(
 )
 {
 	[Endpoint(HttpMethod.Post)]
-	public HttpEndpoint<WsServerInMessage<SendMessageRequest>, SendMessageResponse> SendMessage { get; } = sendMessage;
+	public HttpEndpoint<WsServerInMessage<SendMessageRequest>, SendMessageResponse> sendMessage { get; } = sendMessage;
 
 	[Endpoint(HttpMethod.Get)]
-	public HttpEndpoint<EmptyRequest, HistoryResponse> History { get; } = history;
+	public HttpEndpoint<EmptyRequest, HistoryResponse> history { get; } = history;
 
 	public class SendMessageRequest
 	{
-		public required string Text { get; init; }
+		public required string text { get; init; }
 	}
 
 	public class SendMessageResponse
@@ -26,26 +26,26 @@ public class Chat(
 
 	public interface Message
 	{
-		string Id { get; }
-		string Type { get; }
+		string id { get; }
+		string type { get; }
 	}
 
 	public class TableMessage : Message
 	{
-		public required string Id { get; init; }
-		public string Type { get; } = "System";
-		public required string TableId { get; init; }
+		public required string id { get; init; }
+		public string type { get; } = "System";
+		public required string tableId { get; init; }
 	}
 
 	public class TextMessage : Message
 	{
-		public required string Id { get; init; }
-		public required string Type { get; init; }
-		public required string Text { get; init; }
+		public required string id { get; init; }
+		public required string type { get; init; }
+		public required string text { get; init; }
 	}
 
 	public class HistoryResponse
 	{
-		public required object[] Messages { get; init; }
+		public required object[] messages { get; init; }
 	}
 }

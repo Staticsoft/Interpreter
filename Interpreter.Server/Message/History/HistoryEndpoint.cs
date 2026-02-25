@@ -15,6 +15,6 @@ public class HistoryEndpoint(
 	{
 		var messages = await History.GetMessages(Identity.UserId);
 
-		return new() { Messages = messages };
+		return new() { messages = messages };
 	}
 }

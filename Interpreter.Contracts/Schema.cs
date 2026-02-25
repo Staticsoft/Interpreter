@@ -6,7 +6,7 @@ public class Schema(
 	WebSocket webSocket
 )
 {
-	public Chat Chat { get; } = chat;
-	public Tables Tables { get; } = tables;
-	public WebSocket WebSocket { get; } = webSocket;
+	public Chat chat { get; } = chat;
+	public Tables tables { get; } = tables;
+	public WebSocket webSocket { get; } = webSocket;
 }

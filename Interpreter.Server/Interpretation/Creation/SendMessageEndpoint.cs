@@ -19,7 +19,7 @@ public class SendMessageEndpoint(
 	public async Task<SendMessageResponse> Execute(WsServerInMessage<SendMessageRequest> request)
 	{
 		var user = await Users.Get(request.ConnectionId);
-		var (text, userId) = (request.Body.Text, user.Data.Id);
+		var (text, userId) = (request.Body.text, user.Data.Id);
 
 		var messageId = await Print.UserTextMessage(userId, request.ConnectionId, text);
 

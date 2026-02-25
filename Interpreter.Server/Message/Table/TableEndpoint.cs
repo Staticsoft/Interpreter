@@ -17,8 +17,8 @@ public class TableEndpoint(
 		var table = await Tables.Get(Identity.UserId).Get(tableId);
 		return new()
 		{
-			Columns = JsonSerializer.Deserialize<object[]>(table.Data.Columns)!,
-			Rows = JsonSerializer.Deserialize<object[]>(table.Data.Rows)!
+			columns = JsonSerializer.Deserialize<object[]>(table.Data.Columns)!,
+			rows = JsonSerializer.Deserialize<object[]>(table.Data.Rows)!
 		};
 	}
 }
