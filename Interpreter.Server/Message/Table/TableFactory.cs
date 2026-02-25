@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System.ComponentModel;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -33,8 +34,9 @@ public class TableFactory<Data, View>(
 			.OrderBy(property => property.GetCustomAttribute<JsonPropertyOrderAttribute>()!.Order)
 			.Select(property => new Column()
 			{
-				Title = property.Name,
-				DataType = $"{property.GetCustomAttribute<ColumnTypeAttribute>()!.Type}"
+				key = property.Name,
+				title = property.GetCustomAttribute<DisplayNameAttribute>()!.DisplayName,
+				dataType = $"{property.GetCustomAttribute<ColumnTypeAttribute>()!.Type}"
 			});
 		return new()
 		{

@@ -2,8 +2,8 @@
 
 public enum ColumnType
 {
-	Text,
-	Number,
-	Money,
-	Date
+	text,
+	number,
+	money,
+	date
 }

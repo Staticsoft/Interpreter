@@ -9,8 +9,9 @@ public class FallbackTableFactory<Data> : TableFactory<Data>
 		.OrderBy(p => p.Name)
 		.Select(p => new Column
 		{
-			Title = p.Name,
-			DataType = GetColumnType(p.PropertyType)
+			title = p.Name,
+			key = p.Name,
+			dataType = GetColumnType(p.PropertyType)
 		})
 		.ToArray();
 
@@ -25,13 +26,13 @@ public class FallbackTableFactory<Data> : TableFactory<Data>
 	{
 		type = Nullable.GetUnderlyingType(type) ?? type;
 
-		if (type == typeof(string)) return "text";
-		if (type == typeof(DateTime)) return "date";
+		if (type == typeof(string)) return nameof(ColumnType.text);
+		if (type == typeof(DateTime)) return nameof(ColumnType.date);
 
-		if (IsInteger(type)) return "number";
-		if (IsFloatingPoint(type)) return "money";
+		if (IsInteger(type)) return nameof(ColumnType.number);
+		if (IsFloatingPoint(type)) return nameof(ColumnType.money);
 
-		return "text";
+		return nameof(ColumnType.text);
 	}
 
 	static bool IsInteger(Type type)

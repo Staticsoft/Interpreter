@@ -1,4 +1,5 @@
 ﻿using Staticsoft.Interpreter.Server;
+using System.ComponentModel;
 using System.Text.Json.Serialization;
 
 namespace Staticsoft.TestServer;
@@ -6,18 +7,22 @@ namespace Staticsoft.TestServer;
 public class TestView
 {
 	[JsonPropertyOrder(1)]
-	[ColumnType(ColumnType.Number)]
+	[ColumnType(ColumnType.number)]
+	[DisplayName("Id")]
 	public required int Id { get; init; }
 
 	[JsonPropertyOrder(2)]
-	[ColumnType(ColumnType.Text)]
+	[ColumnType(ColumnType.text)]
+	[DisplayName("Name")]
 	public required string Name { get; init; }
 
 	[JsonPropertyOrder(3)]
-	[ColumnType(ColumnType.Money)]
+	[ColumnType(ColumnType.money)]
+	[DisplayName("Salary")]
 	public required decimal Salary { get; init; }
 
 	[JsonPropertyOrder(4)]
-	[ColumnType(ColumnType.Date)]
+	[ColumnType(ColumnType.date)]
+	[DisplayName("Hire Date")]
 	public required string HireDate { get; init; }
 }
