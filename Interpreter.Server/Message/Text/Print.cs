@@ -36,9 +36,9 @@ public class Print(
 			connectionId,
 			id => new Chat.TextMessage
 			{
-				Id = id,
-				Text = text,
-				Type = type
+				id = id,
+				text = text,
+				type = type
 			});
 
 	Task<string> PrintTableMessage(string userId, string connectionId, string tableId)
@@ -47,8 +47,8 @@ public class Print(
 			connectionId,
 			id => new Chat.TableMessage()
 			{
-				Id = id,
-				TableId = tableId
+				id = id,
+				tableId = tableId
 			});
 
 	async Task<string> PrintMessage<T>(string userId, string connectionId, Func<string, T> getData)

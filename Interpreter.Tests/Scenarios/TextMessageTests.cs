@@ -9,15 +9,15 @@ public class TextMessageTests : TestBase
 	{
 		var messages = await RunUntil<Chat.TextMessage>(
 			"2 + 2",
-			message => message.Text == "Task completed"
+			message => message.text == "Task completed"
 		);
 
 		messages
 			.Should()
 			.BeSimilarTo(
-				new { Text = "2 + 2", Type = "User" },
-				new { Text = "4", Type = "System" },
-				new { Text = "Task completed", Type = "System" }
+				new { text = "2 + 2", type = "User" },
+				new { text = "4", type = "System" },
+				new { text = "Task completed", type = "System" }
 			);
 	}
 
@@ -26,16 +26,16 @@ public class TextMessageTests : TestBase
 	{
 		await RunUntil<Chat.TextMessage>(
 			"2 + 2",
-			message => message.Text == "Task completed"
+			message => message.text == "Task completed"
 		);
 
-		var history = await Api.Chat.History.Execute(new());
-		history.Messages
+		var history = await Api.chat.history.Execute(new());
+		history.messages
 			.Should()
 			.BeSimilarTo(
-				new { Text = "2 + 2", Type = "User" },
-				new { Text = "4", Type = "System" },
-				new { Text = "Task completed", Type = "System" }
+				new { text = "2 + 2", type = "User" },
+				new { text = "4", type = "System" },
+				new { text = "Task completed", type = "System" }
 			);
 	}
 
@@ -44,12 +44,12 @@ public class TextMessageTests : TestBase
 	{
 		var messages = await RunUntil<Chat.TextMessage>(
 			"2 + 2",
-			message => message.Text == "Task completed"
+			message => message.text == "Task completed"
 		);
 
-		var history = await Api.Chat.History.Execute(new());
-		history.Messages
+		var history = await Api.chat.history.Execute(new());
+		history.messages
 			.Should()
-			.BeSimilarTo(messages.Select(message => new { message.Id }).ToArray());
+			.BeSimilarTo(messages.Select(message => new { message.id }).ToArray());
 	}
 }

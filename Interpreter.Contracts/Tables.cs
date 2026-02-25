@@ -7,11 +7,11 @@ public class Tables(
 )
 {
 	[Endpoint(HttpMethod.Get)]
-	public ParametrizedHttpEndpoint<EmptyRequest, TableResponse> Get { get; init; } = get;
+	public ParametrizedHttpEndpoint<EmptyRequest, TableResponse> get { get; init; } = get;
 
 	public class TableResponse
 	{
-		public required object[] Columns { get; init; }
-		public required object[] Rows { get; init; }
+		public required object[] columns { get; init; }
+		public required object[] rows { get; init; }
 	}
 }

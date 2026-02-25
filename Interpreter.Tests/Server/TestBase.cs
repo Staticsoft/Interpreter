@@ -57,7 +57,7 @@ public class TestBase : IntegrationTestBase<TestStartup>
 			Path = "/Chat/SendMessage",
 			Body = new()
 			{
-				Text = userMessage
+				text = userMessage
 			}
 		});
 

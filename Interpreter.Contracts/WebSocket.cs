@@ -9,10 +9,10 @@ public class WebSocket(
 )
 {
 	[Endpoint(HttpMethod.Post)]
-	public HttpEndpoint<WsConnectRequest, ConnectResponse> Connect { get; } = connect;
+	public HttpEndpoint<WsConnectRequest, ConnectResponse> connect { get; } = connect;
 
 	[Endpoint(HttpMethod.Post)]
-	public HttpEndpoint<WsDisconnectRequest, DisconnectResponse> Disconnect { get; } = disconnect;
+	public HttpEndpoint<WsDisconnectRequest, DisconnectResponse> disconnect { get; } = disconnect;
 
 
 	public class ConnectResponse { }
