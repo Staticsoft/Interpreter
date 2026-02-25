@@ -15,9 +15,9 @@ public class TextMessageTests : TestBase
 		messages
 			.Should()
 			.BeSimilarTo(
-				new { text = "2 + 2", type = "User" },
-				new { text = "4", type = "System" },
-				new { text = "Task completed", type = "System" }
+				new { text = "2 + 2", type = "user" },
+				new { text = "4", type = "system" },
+				new { text = "Task completed", type = "system" }
 			);
 	}
 
@@ -33,9 +33,9 @@ public class TextMessageTests : TestBase
 		history.messages
 			.Should()
 			.BeSimilarTo(
-				new { text = "2 + 2", type = "User" },
-				new { text = "4", type = "System" },
-				new { text = "Task completed", type = "System" }
+				new { text = "2 + 2", type = "user" },
+				new { text = "4", type = "system" },
+				new { text = "Task completed", type = "system" }
 			);
 	}
 
