@@ -28,10 +28,10 @@ public class TableMessageTests : TestBase
 		table.columns
 			.Should()
 			.BeSimilarTo(
-				new { Title = "Id", DataType = "Number" },
-				new { Title = "Name", DataType = "Text" },
-				new { Title = "Salary", DataType = "Money" },
-				new { Title = "HireDate", DataType = "Date" }
+				new { key = "Id", title = "Id", dataType = "number" },
+				new { key = "Name", title = "Name", dataType = "text" },
+				new { key = "Salary", title = "Salary", dataType = "money" },
+				new { key = "HireDate", title = "Hire Date", dataType = "date" }
 			);
 		table.rows
 			.Should()

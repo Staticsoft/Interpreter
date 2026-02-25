@@ -2,6 +2,7 @@
 
 public class Column
 {
-	public required string Title { get; init; }
-	public required string DataType { get; init; }
+	public required string key { get; init; }
+	public required string title { get; init; }
+	public required string dataType { get; init; }
 }
